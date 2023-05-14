@@ -15,6 +15,7 @@ fruits_to_show=my_fruit_list.loc[my_fruit_selected]
 # Display the table on the page.
 streamlit.dataframe(fruits_to_show)
 streamlit.header("Fruityvice Fruit Advice!")
+from urllib.error import URLERROR
 try:
   fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
   if not fruit_choice:
