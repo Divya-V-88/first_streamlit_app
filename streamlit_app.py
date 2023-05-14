@@ -36,25 +36,27 @@ except URLError as e:
   
 
 import snowflake.connector
-streamlit.header("The Fruit load list contains:")
+streamlit.header("View Our Fruit List - Add Your Favourites!")
 def get_fruit_list():
   with my_cnx.cursor() as my_cur:
     my_cur.execute("SELECT * FROM pc_rivery_db.public.fruit_load_list")
     return my_cur.fetchall()
   
-if streamlit.button('Get fruit load list'):
+if streamlit.button('Get fruit list'):
   my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
   my_data_rows =get_fruit_list()
+  my_cnx.close()
   streamlit.dataframe(my_data_rows)
   
 def add_row_sf(new_fruit):
   with my_cnx.cursor() as my_cur:
-    my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('from streamlit')")
+    my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('"+new_fruit+"')")
     return "Thanks for adding "+ new_fruit
    
 add_my_fruit = streamlit.text_input('What fruit would you like to add?')
 if streamlit.button('Add a fruit to the list'):
   my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
   from_func=add_row_sf(add_my_fruit)
+  my_cnx.close()
   streamlit.text(from_func)
 
