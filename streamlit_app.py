@@ -29,7 +29,7 @@ try:
     streamlit.error("Please select a fruit to get information")
   else:
     func_response = fruityvice_data(fruit_choice)
-    streamlit.dataframe(pandas.json_normalize(func_response))
+    streamlit.dataframe(func_response)
 except URLError as e:
   streamlit.error()
 streamlit.stop()
